@@ -106,7 +106,7 @@ struct ChatRequest {
 
 async fn call_openai_api(request: ChatRequest) -> Result<String, reqwest::Error> {
     let client = reqwest::Client::new();
-    let api_key = "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"; // Use an environment variable here
+    let api_key = env::var("OPENAI_API_KEY").expect("Expected a key in the environment"); // Use an environment variable here
 
     let res = client
         .post("https://api.openai.com/v1/chat/completions")
@@ -125,7 +125,7 @@ async fn call_openai_api(request: ChatRequest) -> Result<String, reqwest::Error>
 async fn main() {
     dotenv().ok();
     // Configure the client with your Discord bot token in the environment.
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    let token = env::var("DISCORD_BOT_TOKEN").expect("Expected a token in the environment");
     // Set gateway intents, which decides what events the bot will be notified about
     let intents = GatewayIntents::all();
 
